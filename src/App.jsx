@@ -1,13 +1,13 @@
 import  Navbar from "./components/Navbar";
 import { categories } from "./mock/mockData";
-import Counter from "./components/Counter";
+import ItemListContainer from "./components/ItemListContainer";
 
 function App() {
 
   return (
     <>
     <Navbar categories={categories} />
-    <Counter/>
+    <ItemListContainer inicio = {0} stock={8} />
     </>
   
   )

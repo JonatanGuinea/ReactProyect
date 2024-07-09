@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-function Counter () {
+function ItemListContainer () {
 
     const [contador, setContador]=useState(0)
 
@@ -11,13 +11,17 @@ function Counter () {
                 icon: "error",
                 title: "Oops...",
                 text: "No puedes seleccionar menos de 1",
-                footer: '<a href="#">Why do I have this issue?</a>'
               });
             contador = 0;
         }
         setContador(contador - 1)
     }
     const clickMas = ()=>{
+
+        if (contador >9) {
+            Swal.fire("No hay mas Stock!");
+            contador = 10
+        }
         setContador(contador + 1)
     }
 
@@ -40,4 +44,4 @@ function Counter () {
     )
 }
 
-export default Counter
+export default ItemListContainer
