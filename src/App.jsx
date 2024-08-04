@@ -1,6 +1,7 @@
-import  Navbar from "./components/Navbar";
+import  Navbar from "./components/NavBar/Navbar";
 import { categories } from "./mock/mockData";
-import ItemListContainer from "./components/ItemListContainer";
+import ItemListContainer from "./components/ItemListContainer/ItemListContainer";
+
 
 function App() {
 
