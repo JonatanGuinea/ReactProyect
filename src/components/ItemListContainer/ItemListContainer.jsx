@@ -1,55 +1,66 @@
-import { useState } from "react"
-import { products } from "../../mock/mockData.js";
+
+import { useState, useEffect } from "react";
 import ItemList from "../ItemList/ItemList";
+import fetchProducts from "../utils/fetchProducts.js";
 
 
-function ItemListContainer () {
 
+function ItemListContainer() {
+    const [products, setProducts] = useState([]);
+    const [contador, setContador] = useState(0);
 
-    
-    
+    useEffect(() => {
+        fetchProducts()
+            .then((data) => {
+                setProducts(data);
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: error,
+                });
+            });
+    }, []);
 
-    const [contador, setContador]=useState(0)
-    
-    const clickMenos = ()=>{
-        if(contador <1){
+    const clickMenos = () => {
+        if (contador < 1) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "No puedes seleccionar menos de 1",
             });
-            contador = 0;
+            return;
         }
-        setContador(contador - 1)
-    }
-    const clickMas = ()=>{
-        
-        if (contador >9) {
-            Swal.fire("No hay mas Stock!");
-            contador = 10
+        setContador(contador - 1);
+    };
+
+    const clickMas = () => {
+        if (contador >= 10) {
+            Swal.fire("No hay más Stock!");
+            return;
         }
-        setContador(contador + 1)
-    }
+        setContador(contador + 1);
+    };
 
-
-
-    
-    
-    return(
-
+    return (
         <>
-        <h2>Productos</h2>
-        <ItemList products = {products}/>
+            <h2>Productos</h2>
+            <ItemList products={products} />
 
-        <button onClick={clickMenos} type="button" className="btn btn-outline-danger">Quitar</button>
+            <button onClick={clickMenos} type="button" className="btn btn-outline-danger">
+                Quitar
+            </button>
 
-        <button type="button" className="btn btn-secondary">
-        <span className="badge text-bg-secondary">{contador}</span>
-        </button>
+            <button type="button" className="btn btn-secondary">
+                <span className="badge text-bg-secondary">{contador}</span>
+            </button>
 
-        <button onClick={clickMas} type="button" className="btn btn-outline-success">Agregar</button>
+            <button onClick={clickMas} type="button" className="btn btn-outline-success">
+                Agregar
+            </button>
         </>
-    )
+    );
 }
 
-export default ItemListContainer
+export default ItemListContainer;
