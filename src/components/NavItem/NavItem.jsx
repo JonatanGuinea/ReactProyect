@@ -1,9 +1,11 @@
+import { Link, NavLink } from "react-router-dom";
+import "./navItem.css";
 function NavItem({category}){
 
     return (
         <>
         <li className="nav-item">
-        <a className="nav-link active" aria-current="page" href="#">{category}</a>
+        <NavLink className="nav-link" aria-current="page" href="#">{category}</NavLink>
         </li>
         </>
     )

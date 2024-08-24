@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import CartWidget from "../CartWidget/CartWidget";
 import logo from '../../img/apple_logo.png'
 import './Navbar.css'
@@ -8,7 +8,7 @@ function NavBar({ categories }) {
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/"><img src={logo} alt="" /></Link>
+                <NavLink className="navbar-brand" to="/"><img src={logo} alt="" /></NavLink>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -16,10 +16,10 @@ function NavBar({ categories }) {
                     <ul className="navbar-nav">
                         {categories.map((category, index) => (
                             <li className="nav-item" key={index}>
-                                <Link className="nav-link" to={`/category/${category.toLowerCase()}`}>{category}</Link>
+                                <NavLink className="nav-link " to={`/category/${category.toLowerCase()}`}>{category}</NavLink>
                             </li>
                         ))}
-                        <li>
+                        <li className='nav-item ms-auto'>
                             <CartWidget />
                         </li>
                     </ul>

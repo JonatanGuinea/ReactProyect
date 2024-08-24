@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import fetchProducts from "../utils/fetchProducts";
 import ItemList from "../ItemList/ItemList";
+import "./itemListContainer.css";
 
 function ItemListContainer() {
     const [products, setProducts] = useState([]);

@@ -1,4 +1,29 @@
+
+.navbar {
+    background-color: #f8f9fa;     padding: 10px 20px;     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+
+.navbar-brand img {
+    height: 40px; }
+
+.navbar-nav .nav-link {
+    color: #333;     padding: 8px 15px;     text-transform: capitalize;     transition: color 0.3s ease; }
+
+.navbar-nav .nav-link:hover {
+    color: #007bff; }
+
+.navbar-nav .nav-item:last-child {
+    margin-left: auto; }
+
+
 .navbar-brand img{
     max-width: 50px;
     border-radius: 50%;
 }
+
+
+.navbar-nav .nav-link.active {
+    color: #007bff;     background-color: transparent; }
+
+.navbar-nav .nav-link:focus {
+    color: #007bff;     background-color: transparent;     outline: none; }
+
