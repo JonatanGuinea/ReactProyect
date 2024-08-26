@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import './productDetail.css'
+import ItemCount from '../ItemCount/ItemCount';
+import { useCartContext } from "../../context/cartContext";
 
 const ProductDetail = ({ product, addToCart }) => {
     const [quantity, setQuantity] = useState(1);
-
+    
+    
     const handleAddToCart = () => {
         addToCart(product, quantity);
     };
@@ -11,7 +14,7 @@ const ProductDetail = ({ product, addToCart }) => {
     // Funcion para renderizar los detalles del producto
     const renderProductDetails = () => {
         if (!product.detail) return null; 
-
+        
         return Object.entries(product.detail).map(([key, value]) => (
             <p key={key}>
                 <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{" "}
@@ -19,6 +22,14 @@ const ProductDetail = ({ product, addToCart }) => {
             </p>
         ));
     };
+    
+    const {qtyItems, setQtyItems} = useCartContext()
+    
+    const handleOnBuy = (qty)=>{
+        console.log(`Se agregaron ${qty} productos`);
+        setQtyItems(qtyItems + qty)
+        
+    }
 
     return (
         <div className="product-detail">
@@ -30,16 +41,9 @@ const ProductDetail = ({ product, addToCart }) => {
                 <h3>Detalles del producto:</h3>
                 {renderProductDetails()}
             </div>
-            <input
-                type="number"
-                value={quantity}
-                min="1"
-                max="10"
-                onChange={(e) => setQuantity(Number(e.target.value))}
-            />
-            <button onClick={handleAddToCart} className="btn btn-primary">
-                Agregar al carrito
-            </button>
+
+            <ItemCount handleOnBuy= {handleOnBuy}/>
+ 
         </div>
     );
 };
