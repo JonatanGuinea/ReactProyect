@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import fetchProducts from "../utils/fetchProducts";
 import ItemList from "../ItemList/ItemList";
 import "./itemListContainer.css";
+import {db} from '../../firebase/dbConnection'
+import {collection, getDocs, query, where} from 'firebase/firestore'
+import Spinner  from '../Spinner/Spinner'
 
 function ItemListContainer() {
     const [products, setProducts] = useState([]);
@@ -10,21 +12,48 @@ function ItemListContainer() {
     const { categoryId } = useParams();
 
     useEffect(() => {
-        fetchProducts()
-            .then((data) => {
-                setProducts(data);
-                setFilteredProducts(categoryId ? data.filter(product => product.category.toLowerCase() === categoryId) : data);
+        
+        const productsCollection = collection(db, 'productos')
+
+        if(categoryId){
+            const productsCollectionFiltered = query(productsCollection, where('category', '==', categoryId))
+
+
+
+            getDocs(productsCollectionFiltered).then(({docs}) =>{
+                const    prodFromDocs = docs.map((doc)=>({
+                                        id:doc.id,
+                                        ...doc.data()
+                        }))
+    
+                    setProducts(prodFromDocs)
+                    })
+            .catch((error)=>{
+                console.error('Error getting documents: ', error);
+                
             })
-            .catch((error) => {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error",
-                    text: error,
-                });
-            });
+        } else {
+            
+            getDocs(productsCollection).then(({docs}) =>{
+                const    prodFromDocs = docs.map((doc)=>({
+                                        id:doc.id,
+                                        ...doc.data()
+                        }))
+    
+                    setProducts(prodFromDocs)
+                    })
+            .catch((error)=>{
+                console.error('Error getting documents: ', error);
+                
+            })
+        }
+    
+    
+
+
     }, [categoryId]);
 
-    return <ItemList products={filteredProducts} />;
+    return <ItemList products={products} />
 }
 
 export default ItemListContainer;

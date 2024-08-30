@@ -2,8 +2,33 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
 import './footer.css';
+import { products } from '../../mock/mockData';
+import {db} from "../../firebase/dbConnection";
+import {collection, addDoc} from 'firebase/firestore'
+
+
 
 const Footer = () => {
+
+  const addProducts = ()=> {
+
+    const productsCollection = collection(db, 'productos');
+
+    products.forEach((item)=>{
+      addDoc(productsCollection, item)
+        .then(doc => {
+          console.log('producto añadido con id: ', doc.id);
+          
+        })
+        .catch(error => {
+          console.error('Error al agregar producto', error);
+          
+        })
+    })
+  }
+
+
+
   return (
     <footer className="footer">
       <div className="footer-content">
@@ -19,7 +44,9 @@ const Footer = () => {
           <p>&copy; {new Date().getFullYear()} Apple Inc. Todos los derechos reservados.</p>
         </div>
       </div>
+      <button onClick={addProducts}>Agregar Productos</button>
     </footer>
+
   );
 };
 
