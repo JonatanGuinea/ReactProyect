@@ -4,6 +4,7 @@ import fetchProductById from "../utils/fetchProductsById";
 import ProductDetail from "../ProductDetail/ProductDetail";
 import Spinner from '../Spinner/Spinner';
 
+
 function ItemDetailContainer() {
     const [product, setProduct] = useState(null);
     const { productId } = useParams();

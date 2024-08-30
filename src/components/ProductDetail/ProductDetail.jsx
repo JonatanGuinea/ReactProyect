@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import './productDetail.css'
 import ItemCount from '../ItemCount/ItemCount';
 import { useCartContext } from "../../context/cartContext";
+import Cart from '../Cart/Cart.jsx';
 
-const ProductDetail = ({ product, addToCart }) => {
+
+
+const ProductDetail = ({ product }) => {
     const [quantity, setQuantity] = useState(1);
     
+    const {addToCart} = useCartContext()
     
-    const handleAddToCart = () => {
-        addToCart(product, quantity);
-    };
+   
 
     // Funcion para renderizar los detalles del producto
     const renderProductDetails = () => {
@@ -23,17 +25,18 @@ const ProductDetail = ({ product, addToCart }) => {
         ));
     };
     
-    const {qtyItems, setQtyItems} = useCartContext()
     
     const handleOnBuy = (qty)=>{
-        console.log(`Se agregaron ${qty} productos`);
-        setQtyItems(qtyItems + qty)
+
+
+        addToCart(product,qty)
         
     }
 
     return (
         <div className="product-detail">
             <img src={product.imgSrc} alt={product.name} />
+            <div>
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             <p>Precio: ${product.price}</p>
@@ -43,7 +46,7 @@ const ProductDetail = ({ product, addToCart }) => {
             </div>
 
             <ItemCount handleOnBuy= {handleOnBuy}/>
- 
+            </div>
         </div>
     );
 };

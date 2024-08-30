@@ -6,6 +6,8 @@ import ItemDetailContainer from "./components/ItemDetailContainer/ItemDetailCont
 import { categories } from "./mock/mockData";
 import Error from './components/Error/Error.jsx'
 import CartContextProvider from "./context/cartContext.jsx";
+import Footer from "./components/Footer/Footer.jsx";
+import Cart from "./components/Cart/Cart.jsx";
 
 
 
@@ -19,9 +21,12 @@ function App() {
                     <Route path="/" element={<ItemListContainer />} />
                     <Route path="/category/:categoryId" element={<ItemListContainer />} />
                     <Route path="/product/:productId" element={<ItemDetailContainer />} />
+                    <Route path='/cart' element={<Cart/>}/>
                     <Route path="*" element={<Error></Error>} />
                 </Routes>
+            <Footer/>
             </BrowserRouter>
+
         </CartContextProvider>
     );
 }

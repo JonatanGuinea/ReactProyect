@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import './itemCount.css';
+import { useNavigate } from 'react-router-dom';
 
 const ItemCount = ({ initial = 1, stock = 10, handleOnBuy }) => {
+
+    const navigate = useNavigate();
     const [qty, setQty] = useState(initial);
+    const [itemAdded, setItemAdded] = useState(false)
     
     const handleIncrement = () => {
         if (qty < stock) {
@@ -18,8 +22,13 @@ const ItemCount = ({ initial = 1, stock = 10, handleOnBuy }) => {
     
     const handleAddToCart = () => {
         handleOnBuy(qty);
-    };
-    
+        setItemAdded(true)
+    }
+
+    const handleGoToCart=()=>{
+        setItemAdded(false)
+        navigate('/cart')
+    }
     return (
         <div className="item-count">
         <div className="count-controls">
@@ -31,9 +40,17 @@ const ItemCount = ({ initial = 1, stock = 10, handleOnBuy }) => {
             +
             </button>
         </div>
-        <button className="add-to-cart" onClick={handleAddToCart}>
-            Agregar al carrito
-        </button>
+
+        
+        {itemAdded ?(
+                    <button className="add-to-cart" onClick={handleGoToCart}>
+                    Checkout
+                    </button>
+            ): (
+                    <button className="add-to-cart" onClick={handleAddToCart}>
+                        Agregar al carrito
+                    </button>)}
+        
         </div>
     );
 };
